@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Love 💙</title>
+<title>Happy Valentine 💙</title>
 
 <style>
 body{
   margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg,#cceeff,#99ddff);
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#cceeff,#99ddff,#66ccff);
   text-align:center;
   overflow:hidden;
   color:#004466;
@@ -19,119 +19,158 @@ body{
   padding:30px;
 }
 
+.hidden{ display:none; }
+
 button{
   padding:12px 25px;
   margin:15px;
   border:none;
-  border-radius:25px;
+  border-radius:30px;
   background:#00aaff;
   color:white;
   font-size:16px;
   cursor:pointer;
   transition:0.3s;
 }
-
 button:hover{
-  background:#008ecc;
   transform:scale(1.1);
+  background:#008ecc;
 }
 
-.hidden{
-  display:none;
+input{
+  padding:10px;
+  border-radius:15px;
+  border:none;
+  text-align:center;
+}
+
+.bigText{
+  font-size:50px;
+  font-weight:bold;
+  animation:zoom 1s infinite alternate;
+  color:white;
+  text-shadow:0 0 20px #00ccff,0 0 40px #00aaff;
+}
+
+@keyframes zoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.2);}
 }
 
 img{
-  max-width:80%;
+  max-width:85%;
   border-radius:20px;
   box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
 .heart{
   position:fixed;
-  color:#ff66aa;
-  animation: floatUp 5s linear infinite;
+  color:#ffffff;
+  animation:floatUp 5s linear infinite;
   font-size:20px;
 }
-
 @keyframes floatUp{
   0%{transform:translateY(100vh);opacity:1;}
   100%{transform:translateY(-10vh);opacity:0;}
+}
+
+.messageBox{
+  margin-top:20px;
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  display:inline-block;
+  max-width:90%;
+  min-height:80px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- เพลง -->
-<audio id="bgMusic" src="song.mp3" autoplay loop></audio>
+<audio id="bgMusic" autoplay loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
 
 <div class="container">
 
 <!-- หน้าแรก -->
 <div id="page1">
-<h2>นี่ไม่เคยทำให้ใคร 💙</h2>
-<h3>ลองกดเข้าไปดูสิ</h3>
-<button onclick="goPage2()">กดเลย</button>
+  <h2>นี่ไม่เคยทำให้ใคร 💙</h2>
+  <h3>ลองกดเข้าไปดูสิ</h3>
+  <button onclick="showValentine()">กดเลย</button>
 </div>
 
-<!-- คำถามข้อ 1 -->
+<!-- แฮปปี้วาเลนไทน์ -->
+<div id="valentinePage" class="hidden">
+  <div class="bigText">💙 แฮปปี้วาเลนไทน์ 💙</div>
+  <button onclick="goQuestion1()">ต่อไป</button>
+</div>
+
+<!-- คำถามปี -->
 <div id="page2" class="hidden">
-<h2>เราคบกันมากี่ปีแล้ว? 💙</h2>
-<input type="text" id="answer1" placeholder="พิมพ์คำตอบ">
-<br>
-<button onclick="checkYear()">ตอบ</button>
-<p id="error1"></p>
+  <h2>เราคบกันมากี่ปีแล้ว? 💙</h2>
+  <input type="text" id="answer1">
+  <br>
+  <button onclick="checkYear()">ตอบ</button>
+  <div id="error1"></div>
 </div>
 
-<!-- คำถามข้อ 2 -->
+<!-- คำถามรักไหม -->
 <div id="page3" class="hidden">
-<h2>รักไหม? 😏💙</h2>
-<button onclick="loveAnswer('ไม่รัก')">ไม่รัก</button>
-<button onclick="loveAnswer('รัก')">รัก</button>
-<p id="error2"></p>
+  <h2>รักไหม? 😏💙</h2>
+  <button onclick="loveAnswer(false)">ไม่รัก</button>
+  <button onclick="loveAnswer(true)">รัก</button>
+  <div id="error2"></div>
 </div>
 
 <!-- สไลด์รูป -->
 <div id="page4" class="hidden">
-<h2>💙 Our Memories 💙</h2>
-<img id="slider" src="">
-<br>
-<button onclick="showMessage()">มีไรจะบอก</button>
+  <h2>💙 Our Memories 💙</h2>
+  <img id="slider">
+  <br>
+  <button onclick="showLoveMessage()">มีไรจะบอก</button>
+  <div id="loveMsg" class="messageBox"></div>
 </div>
 
 </div>
 
 <script>
-let music = document.getElementById("bgMusic");
 
-function goPage2(){
-  music.play();
+function showValentine(){
   document.getElementById("page1").classList.add("hidden");
+  document.getElementById("valentinePage").classList.remove("hidden");
+  heartEffect();
+}
+
+function goQuestion1(){
+  document.getElementById("valentinePage").classList.add("hidden");
   document.getElementById("page2").classList.remove("hidden");
 }
 
 function checkYear(){
-  let ans = document.getElementById("answer1").value;
-  if(ans === "5ปี" || ans === "5 ปี" || ans === "5"){
+  let ans=document.getElementById("answer1").value.trim();
+  if(ans==="5ปี"||ans==="5 ปี"||ans==="5"){
     document.getElementById("page2").classList.add("hidden");
     document.getElementById("page3").classList.remove("hidden");
   }else{
-    document.getElementById("error1").innerHTML="ผิดน้าาา 😝";
+    document.getElementById("error1").innerHTML="ตอบผิดนะ คิดดีๆอีกที 😝";
   }
 }
 
-function loveAnswer(ans){
-  if(ans === "รัก"){
+function loveAnswer(isLove){
+  if(isLove){
     document.getElementById("page3").classList.add("hidden");
     document.getElementById("page4").classList.remove("hidden");
     startSlider();
     heartEffect();
   }else{
-    document.getElementById("error2").innerHTML="ตอบใหม่ดี ๆ 😏💙";
+    document.getElementById("error2").innerHTML="ตอบใหม่อีกทีนะ 😏💙";
   }
 }
 
-let images = [
+let images=[
 "https://i.ibb.co/gMh9qChS/IMG-1432.jpg",
 "https://i.ibb.co/R43m20hb/IMG-1806.jpg",
 "https://i.ibb.co/ksfcpwBz/7-FD8-FD65-C266-40-F8-B21-A-E3-F34-A2522-F9.jpg",
@@ -145,33 +184,45 @@ let images = [
 "https://i.ibb.co/8LCg1yCQ/IMG-3784.jpg"
 ];
 
-let index = 0;
+let index=0;
 
 function startSlider(){
-  document.getElementById("slider").src = images[0];
+  document.getElementById("slider").src=images[0];
   setInterval(()=>{
     index++;
-    if(index >= images.length){ index = 0; }
-    document.getElementById("slider").src = images[index];
+    if(index>=images.length){index=0;}
+    document.getElementById("slider").src=images[index];
   },3000);
 }
 
 function heartEffect(){
   setInterval(()=>{
-    let heart = document.createElement("div");
+    let heart=document.createElement("div");
     heart.classList.add("heart");
-    heart.style.left = Math.random()*100+"vw";
+    heart.style.left=Math.random()*100+"vw";
     heart.innerHTML="💙";
     document.body.appendChild(heart);
     setTimeout(()=>{heart.remove();},5000);
-  },500);
+  },400);
 }
 
-function showMessage(){
-  alert("ขอบคุณที่ผ่านทุกเหตุการมาด้วยกัน ก็รักแหละ แต่คนมันแบ๊ดๆ อะนะ😂 สุดท้ายนี้ก็ขอให้เราอยู่ด้วยกันไปตลอด❤️");
+function showLoveMessage(){
+  let text="ขอบคุณที่ผ่านทุกเหตุการมาด้วยกัน 💙\n\nก็รักแหละ แต่คนมันแบ๊ดๆ อะนะ😂\n\nสุดท้ายนี้ก็ขอให้เราอยู่ด้วยกันไปตลอด❤️";
+  let box=document.getElementById("loveMsg");
+  box.innerHTML="";
+  let i=0;
+
+  function typeWriter(){
+    if(i<text.length){
+      box.innerHTML+=text.charAt(i)==="\n"?"<br>":text.charAt(i);
+      i++;
+      setTimeout(typeWriter,40);
+    }
+  }
+  typeWriter();
 }
+
 </script>
 
 </body>
 </html>
-

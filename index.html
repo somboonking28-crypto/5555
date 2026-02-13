@@ -3,114 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ถึงเจนจิรา ❤️</title>
+<title>For My Love 💙</title>
 
 <style>
 body{
-margin:0;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
-font-family:sans-serif;
-overflow:hidden;
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#cceeff,#99ddff);
+  text-align:center;
+  overflow:hidden;
+  color:#004466;
 }
 
-.envelope{
-width:350px;
-height:230px;
-background:white;
-position:relative;
-border-radius:10px;
-box-shadow:0 10px 25px rgba(0,0,0,0.3);
-cursor:pointer;
-text-align:center;
-padding-top:80px;
-}
-
-.envelope:before{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:120px;
-background:#ff4d6d;
-clip-path:polygon(0 0,50% 100%,100% 0);
-}
-
-.card{
-display:none;
-position:absolute;
-top:-450px;
-width:350px;
-height:500px;
-background:white;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.3);
-padding:15px;
-text-align:center;
-}
-
-.slideshow img{
-width:100%;
-height:250px;
-object-fit:cover;
-border-radius:15px;
+.container{
+  padding:30px;
 }
 
 button{
-padding:8px 15px;
-border:none;
-border-radius:20px;
-background:#ff4d6d;
-color:white;
-cursor:pointer;
-margin-top:10px;
+  padding:12px 25px;
+  margin:15px;
+  border:none;
+  border-radius:25px;
+  background:#00aaff;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#008ecc;
+  transform:scale(1.1);
+}
+
+.hidden{
+  display:none;
+}
+
+img{
+  max-width:80%;
+  border-radius:20px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
 .heart{
-position:fixed;
-color:red;
-font-size:20px;
-animation:floatUp 3s linear infinite;
+  position:fixed;
+  color:#ff66aa;
+  animation: floatUp 5s linear infinite;
+  font-size:20px;
 }
 
 @keyframes floatUp{
-0%{transform:translateY(0);opacity:1;}
-100%{transform:translateY(-600px);opacity:0;}
+  0%{transform:translateY(100vh);opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="envelope" onclick="askQuestion()">
-<h3>ถึง เจนจิรา 💌</h3>
-<p>กดเพื่อเปิดจดหมาย</p>
+<!-- เพลง -->
+<audio id="bgMusic" src="song.mp3" autoplay loop></audio>
 
-<div class="card" id="card">
-<h2>ถึง เจนจิรา ❤️</h2>
-<p>
-จาก ใส่ชื่อคุณตรงนี้ 💕<br><br>
-ขอบคุณที่เข้ามาในชีวิตเค้า  
-ทุกช่วงเวลาที่มีเธอมันมีความหมายมาก  
-รักเธอที่สุดเลยนะ ❤️
-</p>
+<div class="container">
 
-<div class="slideshow">
-<img id="slide" src="https://i.ibb.co/gMh9qChS/IMG-1432.jpg">
+<!-- หน้าแรก -->
+<div id="page1">
+<h2>นี่ไม่เคยทำให้ใคร 💙</h2>
+<h3>ลองกดเข้าไปดูสิ</h3>
+<button onclick="goPage2()">กดเลย</button>
 </div>
 
-<button onclick="nextSlide()">ดูรูปถัดไป 📸</button>
-
-<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-
+<!-- คำถามข้อ 1 -->
+<div id="page2" class="hidden">
+<h2>เราคบกันมากี่ปีแล้ว? 💙</h2>
+<input type="text" id="answer1" placeholder="พิมพ์คำตอบ">
+<br>
+<button onclick="checkYear()">ตอบ</button>
+<p id="error1"></p>
 </div>
+
+<!-- คำถามข้อ 2 -->
+<div id="page3" class="hidden">
+<h2>รักไหม? 😏💙</h2>
+<button onclick="loveAnswer('ไม่รัก')">ไม่รัก</button>
+<button onclick="loveAnswer('รัก')">รัก</button>
+<p id="error2"></p>
+</div>
+
+<!-- สไลด์รูป -->
+<div id="page4" class="hidden">
+<h2>💙 Our Memories 💙</h2>
+<img id="slider" src="">
+<br>
+<button onclick="showMessage()">มีไรจะบอก</button>
+</div>
+
 </div>
 
 <script>
+let music = document.getElementById("bgMusic");
+
+function goPage2(){
+  music.play();
+  document.getElementById("page1").classList.add("hidden");
+  document.getElementById("page2").classList.remove("hidden");
+}
+
+function checkYear(){
+  let ans = document.getElementById("answer1").value;
+  if(ans === "5ปี" || ans === "5 ปี" || ans === "5"){
+    document.getElementById("page2").classList.add("hidden");
+    document.getElementById("page3").classList.remove("hidden");
+  }else{
+    document.getElementById("error1").innerHTML="ผิดน้าาา 😝";
+  }
+}
+
+function loveAnswer(ans){
+  if(ans === "รัก"){
+    document.getElementById("page3").classList.add("hidden");
+    document.getElementById("page4").classList.remove("hidden");
+    startSlider();
+    heartEffect();
+  }else{
+    document.getElementById("error2").innerHTML="ตอบใหม่ดี ๆ 😏💙";
+  }
+}
 
 let images = [
 "https://i.ibb.co/gMh9qChS/IMG-1432.jpg",
@@ -128,38 +147,31 @@ let images = [
 
 let index = 0;
 
-function askQuestion(){
-let answer = prompt("ก่อนเปิด 💖\nเราคบกันวันอะไร? (ตอบเป็นตัวเลข เช่น 14)");
-if(answer === "14"){   // เปลี่ยนได้
-openCard();
-}else{
-alert("ตอบผิดน้า ลองใหม่อีกครั้ง ❤️");
-}
-}
-
-function openCard(){
-document.getElementById("card").style.display="block";
-document.getElementById("music").play();
-
-for(let i=0;i<25;i++){
-let heart=document.createElement("div");
-heart.innerHTML="❤️";
-heart.classList.add("heart");
-heart.style.left=Math.random()*100+"vw";
-heart.style.top="100vh";
-document.body.appendChild(heart);
-
-setTimeout(()=>{heart.remove();},3000);
-}
+function startSlider(){
+  document.getElementById("slider").src = images[0];
+  setInterval(()=>{
+    index++;
+    if(index >= images.length){ index = 0; }
+    document.getElementById("slider").src = images[index];
+  },3000);
 }
 
-function nextSlide(){
-index++;
-if(index>=images.length){index=0;}
-document.getElementById("slide").src=images[index];
+function heartEffect(){
+  setInterval(()=>{
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.style.left = Math.random()*100+"vw";
+    heart.innerHTML="💙";
+    document.body.appendChild(heart);
+    setTimeout(()=>{heart.remove();},5000);
+  },500);
 }
 
+function showMessage(){
+  alert("ขอบคุณที่ผ่านทุกเหตุการมาด้วยกัน ก็รักแหละ แต่คนมันแบ๊ดๆ อะนะ😂 สุดท้ายนี้ก็ขอให้เราอยู่ด้วยกันไปตลอด❤️");
+}
 </script>
 
 </body>
 </html>
+

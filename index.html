@@ -15,10 +15,7 @@ body{
   color:#004466;
 }
 
-.container{
-  padding:30px;
-}
-
+.container{ padding:30px; }
 .hidden{ display:none; }
 
 button{
@@ -65,7 +62,6 @@ img{
 
 .heart{
   position:fixed;
-  color:#ffffff;
   animation:floatUp 5s linear infinite;
   font-size:20px;
 }
@@ -89,26 +85,23 @@ img{
 
 <body>
 
-<audio id="bgMusic" autoplay loop>
+<audio id="bgMusic" loop>
   <source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
 
-<!-- หน้าแรก -->
 <div id="page1">
   <h2>นี่ไม่เคยทำให้ใคร 💙</h2>
   <h3>ลองกดเข้าไปดูสิ</h3>
-  <button onclick="showValentine()">กดเลย</button>
+  <button onclick="startExperience()">กดเลย</button>
 </div>
 
-<!-- แฮปปี้วาเลนไทน์ -->
 <div id="valentinePage" class="hidden">
   <div class="bigText">💙 แฮปปี้วาเลนไทน์ 💙</div>
   <button onclick="goQuestion1()">ต่อไป</button>
 </div>
 
-<!-- คำถามปี -->
 <div id="page2" class="hidden">
   <h2>เราคบกันมากี่ปีแล้ว? 💙</h2>
   <input type="text" id="answer1">
@@ -117,7 +110,6 @@ img{
   <div id="error1"></div>
 </div>
 
-<!-- คำถามรักไหม -->
 <div id="page3" class="hidden">
   <h2>รักไหม? 😏💙</h2>
   <button onclick="loveAnswer(false)">ไม่รัก</button>
@@ -125,7 +117,6 @@ img{
   <div id="error2"></div>
 </div>
 
-<!-- สไลด์รูป -->
 <div id="page4" class="hidden">
   <h2>💙 Our Memories 💙</h2>
   <img id="slider">
@@ -138,7 +129,16 @@ img{
 
 <script>
 
-function showValentine(){
+function startExperience(){
+  let music = document.getElementById("bgMusic");
+
+  // เล่นเพลงบน iPhone ได้แน่นอน
+  music.play().then(()=>{
+      console.log("Music started");
+  }).catch(()=>{
+      console.log("User interaction required");
+  });
+
   document.getElementById("page1").classList.add("hidden");
   document.getElementById("valentinePage").classList.remove("hidden");
   heartEffect();
@@ -200,6 +200,7 @@ function heartEffect(){
     let heart=document.createElement("div");
     heart.classList.add("heart");
     heart.style.left=Math.random()*100+"vw";
+    heart.style.color="#ffffff";
     heart.innerHTML="💙";
     document.body.appendChild(heart);
     setTimeout(()=>{heart.remove();},5000);
@@ -207,14 +208,14 @@ function heartEffect(){
 }
 
 function showLoveMessage(){
-  let text="ขอบคุณที่ผ่านทุกเหตุการมาด้วยกัน 💙\n\nก็รักแหละ แต่คนมันแบ๊ดๆ อะนะ😂\n\nสุดท้ายนี้ก็ขอให้เราอยู่ด้วยกันไปตลอด❤️";
+  let text="ขอบคุณที่ผ่านทุกเหตุการมาด้วยกัน 💙\\n\\nก็รักแหละ แต่คนมันแบ๊ดๆ อะนะ😂\\n\\nสุดท้ายนี้ก็ขอให้เราอยู่ด้วยกันไปตลอด❤️";
   let box=document.getElementById("loveMsg");
   box.innerHTML="";
   let i=0;
 
   function typeWriter(){
     if(i<text.length){
-      box.innerHTML+=text.charAt(i)==="\n"?"<br>":text.charAt(i);
+      box.innerHTML+=text.charAt(i)==="\\n"?"<br>":text.charAt(i);
       i++;
       setTimeout(typeWriter,40);
     }

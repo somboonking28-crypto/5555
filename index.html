@@ -3,188 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You ❤️</title>
+<title>ถึงเจนจิรา ❤️</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
-    text-align: center;
-    overflow-x: hidden;
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+font-family:sans-serif;
+overflow:hidden;
 }
 
-h1 {
-    margin-top: 30px;
-    color: white;
+.envelope{
+width:350px;
+height:230px;
+background:white;
+position:relative;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+cursor:pointer;
+text-align:center;
+padding-top:80px;
 }
 
-#content {
-    margin-top: 20px;
+.envelope:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:120px;
+background:#ff4d6d;
+clip-path:polygon(0 0,50% 100%,100% 0);
 }
 
-button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 20px;
-    background: white;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
+.card{
+display:none;
+position:absolute;
+top:-450px;
+width:350px;
+height:500px;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+padding:15px;
+text-align:center;
 }
 
-button:hover {
-    background: #ff4d6d;
-    color: white;
+.slideshow img{
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:15px;
 }
 
-.slider {
-    position: relative;
-    width: 90%;
-    max-width: 400px;
-    margin: auto;
-    overflow: hidden;
-    border-radius: 20px;
+button{
+padding:8px 15px;
+border:none;
+border-radius:20px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+margin-top:10px;
 }
 
-.slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
+.heart{
+position:fixed;
+color:red;
+font-size:20px;
+animation:floatUp 3s linear infinite;
 }
 
-.slides img {
-    width: 100%;
-    border-radius: 20px;
-}
-
-.controls {
-    margin-top: 10px;
-}
-
-.countdown {
-    font-size: 20px;
-    color: white;
-    margin-top: 10px;
-}
-
-.heart {
-    position: fixed;
-    color: red;
-    font-size: 20px;
-    animation: floatUp 3s linear infinite;
-}
-
-@keyframes floatUp {
-    0% {transform: translateY(0); opacity: 1;}
-    100% {transform: translateY(-600px); opacity: 0;}
+@keyframes floatUp{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-600px);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<h1>💖 สำหรับเธอคนเดียว 💖</h1>
+<div class="envelope" onclick="askQuestion()">
+<h3>ถึง เจนจิรา 💌</h3>
+<p>กดเพื่อเปิดจดหมาย</p>
 
-<div id="content">
+<div class="card" id="card">
+<h2>ถึง เจนจิรา ❤️</h2>
+<p>
+จาก ใส่ชื่อคุณตรงนี้ 💕<br><br>
+ขอบคุณที่เข้ามาในชีวิตเค้า  
+ทุกช่วงเวลาที่มีเธอมันมีความหมายมาก  
+รักเธอที่สุดเลยนะ ❤️
+</p>
 
-<!-- SLIDER -->
-<div class="slider">
-    <div class="slides" id="slides">
-        <img src="https://picsum.photos/400/500?1">
-        <img src="https://picsum.photos/400/500?2">
-        <img src="https://picsum.photos/400/500?3">
-    </div>
+<div class="slideshow">
+<img id="slide" src="https://i.ibb.co/gMh9qChS/IMG-1432.jpg">
 </div>
 
-<div class="controls">
-    <button onclick="prevSlide()">⬆️ ขึ้น</button>
-    <button onclick="nextSlide()">⬇️ ลง</button>
-</div>
-
-<br>
-
-<button onclick="sweet()">ด่านหวาน</button>
-<button onclick="funny()">ด่านขำ</button>
-<button onclick="angry()">งอน</button>
-<button onclick="boomHearts()">หัวใจระเบิด</button>
-<button onclick="startCountdown()">นับถอยหลัง</button>
-<button onclick="playMusic()">เพลง</button>
-
-<div class="countdown" id="countdown"></div>
-
-</div>
+<button onclick="nextSlide()">ดูรูปถัดไป 📸</button>
 
 <audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
+</div>
+</div>
+
 <script>
+
+let images = [
+"https://i.ibb.co/gMh9qChS/IMG-1432.jpg",
+"https://i.ibb.co/R43m20hb/IMG-1806.jpg",
+"https://i.ibb.co/ksfcpwBz/7-FD8-FD65-C266-40-F8-B21-A-E3-F34-A2522-F9.jpg",
+"https://i.ibb.co/Z6XThpp0/IMG-2762.avif",
+"https://i.ibb.co/N26n7q2d/IMG-2638.avif",
+"https://i.ibb.co/nsHxGQjN/IMG-4040.avif",
+"https://i.ibb.co/JjMLGKjC/IMG-4035.avif",
+"https://i.ibb.co/ch2HJhsD/Full-Size-Render.avif",
+"https://i.ibb.co/1Wcc3ws/18-BEFA9-D-1-AC4-42-E6-A177-8-C155-D2-C2981.jpg",
+"https://i.ibb.co/hF9ztFzV/IMG-4747.jpg",
+"https://i.ibb.co/8LCg1yCQ/IMG-3784.jpg"
+];
+
 let index = 0;
-const slides = document.getElementById("slides");
-const totalSlides = slides.children.length;
 
-function updateSlide() {
-    slides.style.transform = "translateY(" + (-index * 500) + "px)";
+function askQuestion(){
+let answer = prompt("ก่อนเปิด 💖\nเราคบกันวันอะไร? (ตอบเป็นตัวเลข เช่น 14)");
+if(answer === "14"){   // เปลี่ยนได้
+openCard();
+}else{
+alert("ตอบผิดน้า ลองใหม่อีกครั้ง ❤️");
+}
 }
 
-function nextSlide() {
-    if (index < totalSlides - 1) {
-        index++;
-        updateSlide();
-    }
+function openCard(){
+document.getElementById("card").style.display="block";
+document.getElementById("music").play();
+
+for(let i=0;i<25;i++){
+let heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.classList.add("heart");
+heart.style.left=Math.random()*100+"vw";
+heart.style.top="100vh";
+document.body.appendChild(heart);
+
+setTimeout(()=>{heart.remove();},3000);
+}
 }
 
-function prevSlide() {
-    if (index > 0) {
-        index--;
-        updateSlide();
-    }
+function nextSlide(){
+index++;
+if(index>=images.length){index=0;}
+document.getElementById("slide").src=images[index];
 }
 
-function sweet() {
-    alert("รักนะที่สุดในโลกเลย 💖");
-}
-
-function funny() {
-    alert("คิดถึงจัง แต่ก็หิวข้าวด้วย 🤣");
-}
-
-function angry() {
-    alert("งอนแล้วนะ! มาง้อเลย 😤");
-}
-
-function boomHearts() {
-    for (let i = 0; i < 30; i++) {
-        let heart = document.createElement("div");
-        heart.innerHTML = "❤️";
-        heart.classList.add("heart");
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.top = "100vh";
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-            heart.remove();
-        }, 3000);
-    }
-}
-
-function startCountdown() {
-    let count = 5;
-    const el = document.getElementById("countdown");
-    el.innerHTML = count;
-
-    let timer = setInterval(() => {
-        count--;
-        el.innerHTML = count;
-        if (count === 0) {
-            clearInterval(timer);
-            el.innerHTML = "รักนะ ❤️";
-        }
-    }, 1000);
-}
-
-function playMusic() {
-    document.getElementById("music").play();
-}
 </script>
 
 </body>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+    text-align: center;
+    overflow-x: hidden;
+}
+
+h1 {
+    margin-top: 30px;
+    color: white;
+}
+
+#content {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff4d6d;
+    color: white;
+}
+
+.slider {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slides img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.controls {
+    margin-top: 10px;
+}
+
+.countdown {
+    font-size: 20px;
+    color: white;
+    margin-top: 10px;
+}
+
+.heart {
+    position: fixed;
+    color: red;
+    font-size: 20px;
+    animation: floatUp 3s linear infinite;
+}
+
+@keyframes floatUp {
+    0% {transform: translateY(0); opacity: 1;}
+    100% {transform: translateY(-600px); opacity: 0;}
+}
+</style>
+</head>
+
+<body>
+
+<h1>💖 สำหรับเธอคนเดียว 💖</h1>
+
+<div id="content">
+
+<!-- SLIDER -->
+<div class="slider">
+    <div class="slides" id="slides">
+        <img src="https://picsum.photos/400/500?1">
+        <img src="https://picsum.photos/400/500?2">
+        <img src="https://picsum.photos/400/500?3">
+    </div>
+</div>
+
+<div class="controls">
+    <button onclick="prevSlide()">⬆️ ขึ้น</button>
+    <button onclick="nextSlide()">⬇️ ลง</button>
+</div>
+
+<br>
+
+<button onclick="sweet()">ด่านหวาน</button>
+<button onclick="funny()">ด่านขำ</button>
+<button onclick="angry()">งอน</button>
+<button onclick="boomHearts()">หัวใจระเบิด</button>
+<button onclick="startCountdown()">นับถอยหลัง</button>
+<button onclick="playMusic()">เพลง</button>
+
+<div class="countdown" id="countdown"></div>
+
+</div>
+
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+<script>
+let index = 0;
+const slides = document.getElementById("slides");
+const totalSlides = slides.children.length;
+
+function updateSlide() {
+    slides.style.transform = "translateY(" + (-index * 500) + "px)";
+}
+
+function nextSlide() {
+    if (index < totalSlides - 1) {
+        index++;
+        updateSlide();
+    }
+}
+
+function prevSlide() {
+    if (index > 0) {
+        index--;
+        updateSlide();
+    }
+}
+
+function sweet() {
+    alert("รักนะที่สุดในโลกเลย 💖");
+}
+
+function funny() {
+    alert("คิดถึงจัง แต่ก็หิวข้าวด้วย 🤣");
+}
+
+function angry() {
+    alert("งอนแล้วนะ! มาง้อเลย 😤");
+}
+
+function boomHearts() {
+    for (let i = 0; i < 30; i++) {
+        let heart = document.createElement("div");
+        heart.innerHTML = "❤️";
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "100vh";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 3000);
+    }
+}
+
+function startCountdown() {
+    let count = 5;
+    const el = document.getElementById("countdown");
+    el.innerHTML = count;
+
+    let timer = setInterval(() => {
+        count--;
+        el.innerHTML = count;
+        if (count === 0) {
+            clearInterval(timer);
+            el.innerHTML = "รักนะ ❤️";
+        }
+    }, 1000);
+}
+
+function playMusic() {
+    document.getElementById("music").play();
+}
+</script>
+
+</body>
+</html>
